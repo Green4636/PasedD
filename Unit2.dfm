@@ -36,13 +36,30 @@ object Form2: TForm2
     TabOrder = 0
     OnClick = Button1Click
   end
+  object ListBox1: TListBox
+    Left = 215
+    Top = 55
+    Width = 194
+    Height = 47
+    Hint = #1057#1087#1080#1089#1086#1082' '#1092#1072#1081#1083#1086#1074' '#1076#1083#1103' '#1084#1085#1086#1078#1077#1089#1090#1074#1077#1085#1085#1086#1075#1086' '#1072#1085#1072#1083#1080#1079#1072
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ItemHeight = 13
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+  end
   object DBRadioGroup1: TDBRadioGroup
     Left = 89
     Top = 8
     Width = 320
     Height = 41
     Caption = 'Mode Parse'
-    TabOrder = 1
+    TabOrder = 2
   end
   object RadioButton1: TRadioButton
     Left = 96
@@ -60,7 +77,7 @@ object Form2: TForm2
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 2
+    TabOrder = 3
     TabStop = True
   end
   object RadioButton2: TRadioButton
@@ -78,7 +95,7 @@ object Form2: TForm2
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 3
+    TabOrder = 4
   end
   object Memo1: TMemo
     Left = 8
@@ -93,7 +110,7 @@ object Form2: TForm2
     Lines.Strings = (
       'Memo1')
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 5
     Visible = False
   end
   object Edit1: TEdit
@@ -107,8 +124,40 @@ object Form2: TForm2
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 6
     Text = 'Edit1'
+  end
+  object CheckBox1: TCheckBox
+    Left = 8
+    Top = 55
+    Width = 49
+    Height = 17
+    Hint = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1092#1080#1083#1100#1090#1088#1072' '#1088#1077#1075#1091#1083#1103#1088#1085#1099#1093' '#1074#1099#1088#1072#1078#1077#1085#1080#1081' '#1076#1083#1103' '#1095#1090#1077#1085#1080#1103' '#1092#1072#1081#1083#1086#1074
+    Caption = 'Filter'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 7
+    OnClick = CheckBox1Click
+  end
+  object Edit2: TEdit
+    Left = 79
+    Top = 55
+    Width = 130
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 8
+    Text = 'Edit2'
   end
   object Memo2: TMemo
     Left = 5
@@ -126,7 +175,7 @@ object Form2: TForm2
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 6
+    TabOrder = 9
   end
   object ProgressBar1: TProgressBar
     Left = 8
@@ -136,7 +185,7 @@ object Form2: TForm2
     Hint = #1055#1088#1086#1075#1088#1077#1089#1089' '#1095#1090#1077#1085#1080#1103' '#1092#1072#1081#1083#1072
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 7
+    TabOrder = 10
   end
   object ProgressBar2: TProgressBar
     Left = 8
@@ -146,7 +195,7 @@ object Form2: TForm2
     Hint = #1054#1073#1097#1080#1081' '#1087#1088#1086#1075#1088#1077#1089#1089
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 8
+    TabOrder = 11
   end
   object FileOpenDialog1: TFileOpenDialog
     FavoriteLinks = <>
