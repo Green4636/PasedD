@@ -69,8 +69,8 @@ end;
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////Подфункция анализа одного файла//////////////////////////////////////////
 procedure TForm2.example(Path: String; num,reg: Integer);
-var f: TextFile ;
-    rec:string;
+var f,f_save: TextFile ;
+    rec,Path_Save:string;
     i,i_max: integer;
     List: TStringList;
 begin
@@ -86,6 +86,9 @@ begin
   //Настройка строки состояния/////////////////////////////////////////////////////
   Form2.ProgressBar1.position:= 0;
   Form2.ProgressBar1.max:= i_max;
+  ////////Задаем путь с которым будут сохраняться файлы////////////////////////////
+  Path_Save:=Path;
+  Path_Save:= StringReplace(Path,'.log','_find.log',[rfReplaceAll, rfIgnoreCase]);
   ////////Непосредственно чтение файла/////////////////////////////////////////////
   if IOResult <> 0 then
     begin
@@ -108,6 +111,7 @@ begin
     end;
   if(reg=0) then
     begin
+      Memo1.Lines.SaveToFile(Path_Save);//Запись в файл данных из буфера//////////
       ///////Сообщение об окончаний процедуры поиска//////////////////////////////
       Memo2.Lines.Add('File '+Path+' parsed');
       Memo2.Lines.Add('Parsing Completed');
