@@ -1,0 +1,192 @@
+unit Unit2;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, System.RegularExpressions,
+  Vcl.ComCtrls;
+
+type
+  TForm2 = class(TForm)
+    Button1: TButton;
+    FileOpenDialog1: TFileOpenDialog;
+    ListBox1: TListBox;
+    DBRadioGroup1: TDBRadioGroup;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    FileOpenDialog2: TFileOpenDialog;
+    Memo1: TMemo;
+    Edit1: TEdit;
+    CheckBox1: TCheckBox;
+    Edit2: TEdit;
+    Label1: TLabel;
+    Memo2: TMemo;
+    ProgressBar1: TProgressBar;
+    ProgressBar2: TProgressBar;
+    procedure example(Path: String; num,reg: Integer );
+    procedure GetAllFiles( Path: string; Lb: TListBox );
+    procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure CheckBox1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+  numM:Integer;
+  RegEx:TRegEx;
+
+implementation
+
+{$R *.dfm}
+
+ procedure TForm2.Button1Click(Sender: TObject);
+ var
+ SelectedFolder,buf: string;
+ num,reg:Integer;
+ i: Integer;
+ begin
+ listbox1.Clear;
+ numM:=0;
+ if(RadioButton1.Checked=true) then
+  begin
+
+    FileOpenDialog1.Options := FileOpenDialog1.Options + [fdoPickFolders];
+    if not FileOpenDialog1.Execute then
+    Abort;
+    SelectedFolder := FileOpenDialog1.FileName;
+    GetAllFiles(SelectedFolder, listbox1 );
+    //'D:\verilog\'
+    num:=listbox1.Items.Count;
+    ProgressBar2.position:= 0;
+    ProgressBar2.max:=num;
+    Memo1.Lines.Clear;
+    for i := 0 to (num-1) do
+begin
+    ProgressBar2.position:= i+1;
+    if(i=(num-1)) then reg:=0 else reg:=1;
+    example(listbox1.Items[i],numM,reg);
+    if(reg=1) then
+     begin
+      Memo2.Lines.Add('File '+listbox1.Items[i]+' parsed');
+      Memo2.Lines.Add(IntToStr(i+1)+'/'+ IntToStr(num)+'  analyzed');
+     end;
+end;
+
+
+
+  end;
+ if(RadioButton2.Checked=true) then
+  begin
+   if not FileOpenDialog2.Execute then
+    Abort;
+    buf := FileOpenDialog2.FileName;
+    Memo1.Lines.Clear;
+    example(buf,0,0);
+
+
+
+  end;
+end;
+
+procedure TForm2.CheckBox1Click(Sender: TObject);
+begin
+ If(Checkbox1.Checked=true) then
+     begin
+     Edit2.Show;
+     end;
+         If(Checkbox1.Checked=false) then
+     begin
+     Edit2.Hide;
+     end;
+end;
+
+procedure TForm2.example(Path: String; num,reg: Integer);
+var f,f_save: TextFile ;
+    rec,Path_Save:string;
+    i,i_max: integer;
+    List: TStringList;
+begin
+
+  List:= TStringList.Create;
+  List.LoadFromFile(Path);
+  i_max:=List.Count;
+  List.Free;
+
+
+AssignFile(f, Path);
+Reset(f);
+Form2.ProgressBar1.position:= 0;
+Form2.ProgressBar1.max:= i_max;
+Path_Save:=Path;
+Path_Save:= StringReplace(Path,'.log','_find.log',[rfReplaceAll, rfIgnoreCase]);
+ if IOResult <> 0 then begin
+ShowMessage('Ошибка открытия файла БД.');
+Exit;
+end;
+i:=1;
+while not EOF(f) do begin
+readln(f, rec);
+Form2.ProgressBar1.position:= i;
+i:=i+1;
+Memo2.Lines.Add(rec);
+if RegEx.IsMatch(rec,Edit1.Text)then
+begin
+Memo1.Lines.Add(rec);
+ num:=num+1;
+end;
+ // прочитать запись
+end;
+if(reg=0) then
+begin
+Memo1.Lines.SaveToFile(Path_Save);
+Memo2.Lines.Add('File '+Path+' parsed');
+Memo2.Lines.Add('Parsing Completed');
+Memo2.Lines.Add('Found  '+IntToStr(num)+ ' records');
+end;
+numM:=num;
+CloseFile(f);
+end;
+
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+Memo1.Lines.Clear;
+Memo2.Lines.Clear;
+Edit2.Clear;
+Edit2.Hide;
+Edit1.Clear;
+Edit1.Text:='Error';
+end;
+
+procedure TForm2.GetAllFiles( Path: string; Lb: TListBox );
+var
+sRec: TSearchRec;
+isFound: boolean;
+begin
+isFound := FindFirst( Path + '\*.*', faAnyFile, sRec ) = 0;
+while isFound do
+begin
+if ( sRec.Name <> '.' ) and ( sRec.Name <> '..' ) then
+begin
+if ( sRec.Attr and faDirectory ) = faDirectory then
+GetAllFiles( Path + '\' + sRec.Name, Lb );
+if pos('.log',copy(sRec.Name, length(sRec.Name)-3,4))=1 then
+    begin
+    if((CheckBox1.Checked=false))then
+    Lb.Items.Add( Path + '\' + sRec.Name )
+    else if((CheckBox1.Checked=true) and (RegEx.IsMatch(Path + '\' + sRec.Name,Edit2.Text)))  then
+    Lb.Items.Add( Path + '\' + sRec.Name )
+    end;
+end;
+Application.ProcessMessages;
+isFound := FindNext( sRec ) = 0;
+end;
+FindClose( sRec );
+end;
+
+
+end.

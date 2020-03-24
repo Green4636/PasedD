@@ -1,0 +1,121 @@
+unit Unit2;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, System.RegularExpressions;
+
+type
+  TForm2 = class(TForm)
+    Button1: TButton;
+    FileOpenDialog1: TFileOpenDialog;
+    ListBox1: TListBox;
+    DBRadioGroup1: TDBRadioGroup;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    FileOpenDialog2: TFileOpenDialog;
+    Memo1: TMemo;
+    Edit1: TEdit;
+    procedure example(Path: String );
+    procedure GetAllFiles( Path: string; Lb: TListBox );
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+{$R *.dfm}
+
+ procedure TForm2.Button1Click(Sender: TObject);
+ var
+ SelectedFolder,buf: string;
+ begin
+ if(RadioButton1.Checked=true) then
+  begin
+    FileOpenDialog1.Options := FileOpenDialog1.Options + [fdoPickFolders];
+    if not FileOpenDialog1.Execute then
+    Abort;
+    SelectedFolder := FileOpenDialog1.FileName;
+    GetAllFiles(SelectedFolder, listbox1 );//'D:\verilog\'
+
+
+
+
+  end;
+ if(RadioButton2.Checked=true) then
+  begin
+   if not FileOpenDialog2.Execute then
+    Abort;
+    buf := FileOpenDialog2.FileName;
+    example(buf);
+
+
+
+  end;
+end;
+
+procedure TForm2.example(Path: String );
+var f,f_save: TextFile ;
+    rec,Path_Save:string;
+    RegEx:TRegEx;
+begin
+AssignFile(f, Path);
+Reset(f);
+Path_Save:=Path;
+Path_Save:= StringReplace(Path,'.log','_find.log',
+                          [rfReplaceAll, rfIgnoreCase]);
+Form2.Memo1.Lines.Add(Path_Save);
+AssignFile(f_save,Path_Save );
+Reset(f_save);
+Rewrite(f_save);
+ if IOResult <> 0 then begin
+ShowMessage('Ошибка открытия файла БД.');
+Exit;
+end;
+while not EOF(f) do begin
+readln(f, rec);
+//if(pos(Edit1.Text,rec)>0) then
+Form2.Memo1.Lines.Add(rec);
+if RegEx.IsMatch(rec,Edit1.Text)then
+Writeln(f_save,rec);
+
+ // прочитать запись
+end;
+CloseFile(f_save);
+CloseFile(f);
+end;
+
+
+
+
+
+procedure TForm2.GetAllFiles( Path: string; Lb: TListBox );
+var
+sRec: TSearchRec;
+isFound: boolean;
+begin
+isFound := FindFirst( Path + '\*.*', faAnyFile, sRec ) = 0;
+while isFound do
+begin
+if ( sRec.Name <> '.' ) and ( sRec.Name <> '..' ) then
+begin
+if ( sRec.Attr and faDirectory ) = faDirectory then
+GetAllFiles( Path + '\' + sRec.Name, Lb );
+if pos('.log',copy(sRec.Name, length(sRec.Name)-3,4))=1 then
+Lb.Items.Add( Path + '\' + sRec.Name );
+end;
+Application.ProcessMessages;
+isFound := FindNext( sRec ) = 0;
+end;
+FindClose( sRec );
+end;
+
+
+end.
