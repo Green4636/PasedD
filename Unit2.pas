@@ -20,6 +20,7 @@ type
     Label1: TLabel;
     Memo2: TMemo;
     ProgressBar1: TProgressBar;
+    ProgressBar2: TProgressBar;
     procedure example(Path: String; num,reg: Integer );
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -32,6 +33,7 @@ type
 var
   Form2: TForm2;
   numM:Integer;
+  RegEx:TRegEx;
 
 implementation
 
@@ -97,6 +99,20 @@ begin
       Form2.ProgressBar1.position:= i;/////Индикация в прогресс баре//////////////
       i:=i+1;////Инкремент строки/////////////////////////////////////////////////
       Memo2.Lines.Add(rec);//////вывод в консоль//////////////////////////////////
+      ///Поиск нужной фразы в строке(с исползование регулярных выражений//////////
+      if RegEx.IsMatch(rec,Edit1.Text)then
+        begin
+          Memo1.Lines.Add(rec);//Вывод в буфер////////////////////////////////////
+          num:=num+1;//Инкремент счетчика найденных записей///////////////////////
+        end;
+    end;
+  if(reg=0) then
+    begin
+      ///////Сообщение об окончаний процедуры поиска//////////////////////////////
+      Memo2.Lines.Add('File '+Path+' parsed');
+      Memo2.Lines.Add('Parsing Completed');
+      Memo2.Lines.Add('Found  '+IntToStr(num)+ ' records');
+      ////////////////////////////////////////////////////////////////////////////
     end;
     CloseFile(f);////Закрытие файла///////////////////////////////////////////////
 end;

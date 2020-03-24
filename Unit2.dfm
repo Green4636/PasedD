@@ -138,6 +138,16 @@ object Form2: TForm2
     ShowHint = True
     TabOrder = 7
   end
+  object ProgressBar2: TProgressBar
+    Left = 8
+    Top = 127
+    Width = 401
+    Height = 17
+    Hint = #1054#1073#1097#1080#1081' '#1087#1088#1086#1075#1088#1077#1089#1089
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 8
+  end
   object FileOpenDialog1: TFileOpenDialog
     FavoriteLinks = <>
     FileTypes = <>
