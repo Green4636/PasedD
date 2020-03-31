@@ -121,18 +121,18 @@ end;
 procedure TForm2.example(Path: String; num,reg: Integer);
 var f,f_save: TextFile ;
     rec,Path_Save:string;
-    i,i_max: integer;
+    i,i_max,j: integer;
     List: TStringList;
 begin
 //////Получаем количиество строк в файле(нужно для ProgressBar)////////////////////
   List:= TStringList.Create;
   List.LoadFromFile(Path);
   i_max:=List.Count;
-  List.Free;
+   // ;X
 ///////////////////////////////////////////////////////////////////////////////////
 ///Открываем файлы с переданнымх путем/////////////////////////////////////////////
-  AssignFile(f, Path);
-  Reset(f);
+  ////AssignFile(f, Path); X
+  ////Reset(f); X
   //Настройка строки состояния/////////////////////////////////////////////////////
   Form2.ProgressBar1.position:= 0;
   Form2.ProgressBar1.max:= i_max;
@@ -140,36 +140,36 @@ begin
   Path_Save:=Path;
   Path_Save:= StringReplace(Path,'.log','_find.log',[rfReplaceAll, rfIgnoreCase]);
   ////////Непосредственно чтение файла/////////////////////////////////////////////
-  if IOResult <> 0 then
+   i:=1;
+   for j := 0 to i_max-2 do            //(i_max-1)
     begin
-      ShowMessage('Ошибка открытия файла log.');
-      Exit;
-    end;
-  i:=1;
-  while not EOF(f) do
-    begin
-      readln(f, rec);//////////Читаем строку//////////////////////////////////////
+      rec:=List[i];
+      //readln(f, rec);//////////Читаем строку//////////////////////////////////////
+      //Memo2.Lines.Add(rec);//////вывод в консоль//////////////////////////////////
       Form2.ProgressBar1.position:= i;/////Индикация в прогресс баре//////////////
       i:=i+1;////Инкремент строки/////////////////////////////////////////////////
-      Memo2.Lines.Add(rec);//////вывод в консоль//////////////////////////////////
+    //  Memo2.Lines.Add(rec);//////вывод в консоль//////////////////////////////////
       ///Поиск нужной фразы в строке(с исползование регулярных выражений//////////
       if RegEx.IsMatch(rec,Edit1.Text)then
         begin
+          Memo2.Lines.Add(rec);//////вывод в консоль//////////////////////////////////
           Memo1.Lines.Add(rec);//Вывод в буфер////////////////////////////////////
           num:=num+1;//Инкремент счетчика найденных записей///////////////////////
         end;
     end;
-  if(reg=0) then
+    Memo1.Lines.SaveToFile(Path_Save);//Запись в файл данных из буфера//////////
+    if(reg=0) then
     begin
-      Memo1.Lines.SaveToFile(Path_Save);//Запись в файл данных из буфера//////////
+      //Memo1.Lines.SaveToFile(Path_Save);//Запись в файл данных из буфера//////////
       ///////Сообщение об окончаний процедуры поиска//////////////////////////////
       Memo2.Lines.Add('File '+Path+' parsed');
       Memo2.Lines.Add('Parsing Completed');
       Memo2.Lines.Add('Found  '+IntToStr(num)+ ' records');
       ////////////////////////////////////////////////////////////////////////////
     end;
+    Memo1.Lines.Clear;
     numM:=num;///Увеличение счетчика найденных записей(для множественного анализа/
-    CloseFile(f);////Закрытие файла///////////////////////////////////////////////
+    List.Free;
 end;
 //////////////////////////////////////////////////////////////////////////////////
 //////Функция вызываемая при запуске программы////////////////////////////////////

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.623,F:\pars2\Unit2.pas=C:\Users\ulmg\Documents\RAD Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.903,=C:\Users\ulmg\Documents\RAD Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.623,C:\Users\ulmg\Documents\RAD Studio\Projects\Unit2.dfm=F:\pars2\Unit2.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.379,C:\Users\ulmg\Documents\RAD Studio\Projects\Project1.dproj=F:\pars2\Project1.dproj</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.623,C:\Users\ulmg\Documents\RAD Studio\Projects\Unit2.pas=F:\pars2\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.379,F:\pars2\Project1.dproj=C:\Users\ulmg\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.623,F:\pars2\Unit2.dfm=C:\Users\ulmg\Documents\RAD Studio\Projects\Unit2.dfm</Transaction>
   </Transactions>
 </BorlandProject>

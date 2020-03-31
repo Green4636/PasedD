@@ -3,7 +3,7 @@ object Form2: TForm2
   Top = 0
   Caption = 'ParsingD'
   ClientHeight = 470
-  ClientWidth = 417
+  ClientWidth = 569
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -39,7 +39,7 @@ object Form2: TForm2
   object ListBox1: TListBox
     Left = 215
     Top = 55
-    Width = 194
+    Width = 346
     Height = 47
     Hint = #1057#1087#1080#1089#1086#1082' '#1092#1072#1081#1083#1086#1074' '#1076#1083#1103' '#1084#1085#1086#1078#1077#1089#1090#1074#1077#1085#1085#1086#1075#1086' '#1072#1085#1072#1083#1080#1079#1072
     Font.Charset = DEFAULT_CHARSET
@@ -56,7 +56,7 @@ object Form2: TForm2
   object DBRadioGroup1: TDBRadioGroup
     Left = 89
     Top = 8
-    Width = 320
+    Width = 472
     Height = 41
     Caption = 'Mode Parse'
     TabOrder = 2
@@ -68,7 +68,6 @@ object Form2: TForm2
     Height = 17
     Hint = #1040#1085#1072#1083#1080#1079' '#1074#1089#1077#1093' '#1092#1072#1081#1083#1086#1074' '#1072' '#1087#1072#1087#1082#1077
     Caption = 'Multiple parse'
-    Checked = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -78,15 +77,15 @@ object Form2: TForm2
     ParentShowHint = False
     ShowHint = True
     TabOrder = 3
-    TabStop = True
   end
   object RadioButton2: TRadioButton
-    Left = 288
-    Top = 24
-    Width = 113
+    Left = 296
+    Top = 20
+    Width = 105
     Height = 17
     Hint = #1040#1085#1072#1083#1080#1079' '#1086#1090#1076#1077#1083#1100#1085#1086#1075#1086' '#1092#1072#1081#1083#1072
     Caption = 'Single parse'
+    Checked = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -96,6 +95,7 @@ object Form2: TForm2
     ParentShowHint = False
     ShowHint = True
     TabOrder = 4
+    TabStop = True
   end
   object Memo1: TMemo
     Left = 8
@@ -162,7 +162,7 @@ object Form2: TForm2
   object Memo2: TMemo
     Left = 5
     Top = 150
-    Width = 404
+    Width = 556
     Height = 312
     Hint = #1050#1086#1085#1089#1086#1083#1100
     Font.Charset = DEFAULT_CHARSET
@@ -180,7 +180,7 @@ object Form2: TForm2
   object ProgressBar1: TProgressBar
     Left = 8
     Top = 105
-    Width = 401
+    Width = 553
     Height = 17
     Hint = #1055#1088#1086#1075#1088#1077#1089#1089' '#1095#1090#1077#1085#1080#1103' '#1092#1072#1081#1083#1072
     ParentShowHint = False
@@ -189,8 +189,8 @@ object Form2: TForm2
   end
   object ProgressBar2: TProgressBar
     Left = 8
-    Top = 127
-    Width = 401
+    Top = 128
+    Width = 553
     Height = 17
     Hint = #1054#1073#1097#1080#1081' '#1087#1088#1086#1075#1088#1077#1089#1089
     ParentShowHint = False
